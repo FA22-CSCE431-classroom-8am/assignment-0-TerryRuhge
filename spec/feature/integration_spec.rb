@@ -38,8 +38,8 @@ RSpec.describe 'Updating a book', type: :feature do
     expect(page).to have_content('27.96')
     expect(page).to have_content('January 1 2000')
 
-    expect(page).to have_no_content('January 15 2001')
-    expect(page).to have_no_content('14.99')
+    expect(page).not_to have_content('January 15 2001')
+    expect(page).not_to have_content('14.99')
 
   end
 end
@@ -60,7 +60,7 @@ Rspec.describe 'Deleting a book', type: :feature do
     expect(page).to have_content('Are you sure you want to permanently delete this subject?')
     click_on 'Delete Book'
     expect(flash[:notice]).to be_present
-    expect(page).to have_no_content('Harry Potter The Goblet of Fire')
+    expect(page).not_to have_content('Harry Potter The Goblet of Fire')
   end
 end
 
