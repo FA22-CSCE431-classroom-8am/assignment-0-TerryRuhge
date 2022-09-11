@@ -14,20 +14,25 @@ RSpec.describe 'Creating a book', type: :feature do
     expect(page).to have_content('14.99')
     expect(page).to have_content('January 15 2001')
   end
+
+  scenario 'invalid inputs' do
+    visit new_book_path
+    fill_in 'Title', with: ''
+    fill_in 'Price', with: ""
+    fill_in 'Published', with: ""
+    click_on 'Create Book'
+    expect(flash[:notice]).to be_present
+    visit books_path
+    expect(page).to have_content("Title can't be blank")
+    expect(page).to have_content("Price can't be blank")
+    expect(page).to have_content("Date can't be blank")
+  end
 end
 
 RSpec.describe 'Updating a book', type: :feature do
   scenario 'valid inputs' do
-    visit new_book_path
-    fill_in 'Title', with: 'harry potter'
-    fill_in 'Price', with: "14.99"
-    fill_in 'Published', with: "January 15 2001"
-    click_on 'Create Book'
-    expect(flash[:notice]).to be_present
-    visit books_path
-    expect(page).to have_content('harry potter')
-    
-    click_on 'Update'
+    harryp = Book.create!(title: 'Harrpy Potter The Chamber of Secrets', price: '14.99', published: 'January 16 2003')
+    visit edit_city_path(id: harryp.id)
     fill_in 'Title', with:'Harry Potter The Goblet of Fire'
     fill_in 'Price', with:'27.96'
     fill_in 'Published', with:'January 1 2000'
@@ -42,6 +47,18 @@ RSpec.describe 'Updating a book', type: :feature do
     expect(page).not_to have_content('14.99')
 
   end
+
+  scenario 'invalid inputs' do
+      harryp = Book.create!(title: 'Harrpy Potter The Chamber of Secrets', price: '14.99', published: 'January 16 2003')
+      visit edit_city_path(id: harryp.id)
+      fill_in 'Title', with: ''
+      fill_in 'Price', with: ""
+      fill_in 'Published', with: ""
+      click_on 'Update Book'
+      expect(page).to have_content("Title can't be blank")
+      expect(page).to have_content("Price can't be blank")
+      expect(page).to have_content("Date can't be blank")
+    end
 end
 
 Rspec.describe 'Deleting a book', type: :feature do
