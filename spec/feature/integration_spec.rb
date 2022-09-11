@@ -8,6 +8,7 @@ RSpec.describe 'Creating a book', type: :feature do
     fill_in 'Price', with: "14.99"
     fill_in 'Published', with: "January 15 2001"
     click_on 'Create Book'
+    expect(flash[:notice]).to be_present
     visit books_path
     expect(page).to have_content('harry potter')
     expect(page).to have_content('14.99')
@@ -22,6 +23,7 @@ RSpec.describe 'Updating a book', type: :feature do
     fill_in 'Price', with: "14.99"
     fill_in 'Published', with: "January 15 2001"
     click_on 'Create Book'
+    expect(flash[:notice]).to be_present
     visit books_path
     expect(page).to have_content('harry potter')
     
@@ -30,6 +32,7 @@ RSpec.describe 'Updating a book', type: :feature do
     fill_in 'Price', with:'27.96'
     fill_in 'Published', with:'January 1 2000'
     click_on 'Update Book'
+    expect(flash[:notice]).to be_present
     visit books_path
     expect(page).to have_content('Harry Potter The Goblet of Fire')
     expect(page).to have_content('27.96')
@@ -48,6 +51,7 @@ Rspec.describe 'Deleting a book', type: :feature do
     fill_in 'Price', with:'27.96'
     fill_in 'Published', with:'January 1 2000'
     click_on 'Create Book'
+    expect(flash[:notice]).to be_present
     visit books_path
     expect(page).to have_content('Harry Potter The Goblet of Fire')
 
@@ -55,7 +59,7 @@ Rspec.describe 'Deleting a book', type: :feature do
     click_on 'Delete'
     expect(page).to have_content('Are you sure you want to permanently delete this subject?')
     click_on 'Delete Book'
-
+    expect(flash[:notice]).to be_present
     expect(page).to have_no_content('Harry Potter The Goblet of Fire')
   end
 end
@@ -67,6 +71,7 @@ Rspec.describe 'Showing a book', type: :feature do
     fill_in 'Price', with:'27.96'
     fill_in 'Published', with:'January 1 2000'
     click_on 'Create Book'
+    expect(flash[:notice]).to be_present
     visit books_path
     expect(page).to have_content('Harry Potter The Goblet of Fire')
 
