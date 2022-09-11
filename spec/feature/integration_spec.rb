@@ -50,7 +50,7 @@ RSpec.describe 'Updating a book', type: :feature do
 
   scenario 'invalid inputs' do
       harryp = Book.create!(title: 'Harrpy Potter The Chamber of Secrets', price: '14.99', published: 'January 16 2003')
-      visit edit_city_path(id: harryp.id)
+      visit edit_book_path(id: harryp.id)
       fill_in 'Title', with: ''
       fill_in 'Price', with: ""
       fill_in 'Published', with: ""
@@ -63,12 +63,7 @@ end
 
 Rspec.describe 'Deleting a book', type: :feature do
   scenario 'valid inputs' do
-    visit new_book_path
-    fill_in 'Title', with:'Harry Potter The Goblet of Fire'
-    fill_in 'Price', with:'27.96'
-    fill_in 'Published', with:'January 1 2000'
-    click_on 'Create Book'
-    expect(flash[:notice]).to be_present
+    harryp = Book.create!(title: 'Harry Potter The Goblet of Fire', price: '14.99', published: 'January 16 2003')
     visit books_path
     expect(page).to have_content('Harry Potter The Goblet of Fire')
 
@@ -76,19 +71,14 @@ Rspec.describe 'Deleting a book', type: :feature do
     click_on 'Delete'
     expect(page).to have_content('Are you sure you want to permanently delete this subject?')
     click_on 'Delete Book'
-    expect(flash[:notice]).to be_present
+    accept_alert
     expect(page).not_to have_content('Harry Potter The Goblet of Fire')
   end
 end
 
 Rspec.describe 'Showing a book', type: :feature do
   scenario 'valid inputs' do
-    visit new_book_path
-    fill_in 'Title', with:'Harry Potter The Goblet of Fire'
-    fill_in 'Price', with:'27.96'
-    fill_in 'Published', with:'January 1 2000'
-    click_on 'Create Book'
-    expect(flash[:notice]).to be_present
+    harryp = Book.create!(title: 'Harry Potter The Goblet of Fire', price: '14.99', published: 'January 16 2003')
     visit books_path
     expect(page).to have_content('Harry Potter The Goblet of Fire')
 
