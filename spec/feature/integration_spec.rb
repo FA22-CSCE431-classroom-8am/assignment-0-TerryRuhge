@@ -34,7 +34,7 @@ end
 
 RSpec.describe 'Updating a book', type: :feature do
   scenario 'valid inputs' do
-    harryp = fill_in 'Author', with: "J. K. Rowling"
+    harryp =  Book.create!(title: 'Harrpy Potter The Chamber of Secrets', price: '14.99', published_date: '01/15/2000', author: 'J. K. Rowling')
     visit edit_book_path(id: harryp.id)
     fill_in 'Title', with:'Harry Potter The Goblet of Fire'
     fill_in 'Price', with:'27.96'
